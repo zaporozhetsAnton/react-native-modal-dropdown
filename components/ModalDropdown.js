@@ -86,6 +86,10 @@ export default class ModalDropdown extends Component {
       buttonText: props.defaultValue,
       selectedIndex: props.defaultIndex
     };
+
+    this.select = this.select.bind(this)
+    this.show = this.show.bind(this)
+    this.hide = this.hide.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
