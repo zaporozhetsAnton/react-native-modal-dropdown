@@ -38,7 +38,7 @@ You can find them in the example.
 
 ## Installation
 ```sh
-npm i react-native-modal-dropdown -save
+yarn add https://github.com/zaporozhetsAnton/react-native-modal-dropdown
 ```
 
 ## Usage

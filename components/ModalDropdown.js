@@ -406,7 +406,7 @@ export default class ModalDropdown extends Component {
       this.setState({
         valuesArray: newValuesArray,
         indexesArray: newIndexesArray,
-        buttonText: newValuesArray.length ? `${newValuesArray.length} options selected` : 'Choose..'
+        buttonText: newValuesArray.length ? `${newValuesArray.length} option${newValuesArray.length > 1 ? 's' : ''} selected` : 'Choose..'
       }, () => {
         onMultipleSelect(newValuesArray)
       });
