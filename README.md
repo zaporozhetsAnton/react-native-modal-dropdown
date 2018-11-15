@@ -1,8 +1,9 @@
 [![npm version](https://badge.fury.io/js/react-native-modal-dropdown.svg)](https://badge.fury.io/js/react-native-modal-dropdown)
 
-# react-native-modal-dropdown
-A react-native dropdown/picker/selector component for both Android & iOS.
-With binded methods
+# for of react-native-modal-dropdown
+I have forked this component with the purpose of adding new features which were absent in the default component repo: 1 working method  select(-1), 2 - added multiple select
+
+[Original link - react-native-modal-dropdown](https://github.com/sohobloo/react-native-modal-dropdown)
 
 ## Features
 - Pure JS.
@@ -19,6 +20,9 @@ With binded methods
 You can find them in the example.
 
 ## Update History
+
+### v0.6.3
+- Add multiselect functionality
 
 ### v0.6.2
 - Fix [#139](https://github.com/sohobloo/react-native-modal-dropdown/issues/139) `renderButtonText` renders \[object Object] if there is a call to `setState` in `onSelect` or `renderButtonText` functions
@@ -66,6 +70,8 @@ You can also render your option row and row separator by implement `renderRow` a
 ### Props
 Prop                | Type     | Optional | Default   | Description
 ------------------- | -------- | -------- | --------- | -----------
+`multiple`          | bool     | Yes      | false     | enable multiselect
+`onMultipleSelect`  | func     | Yes      |           | callback of multiselect
 `disabled`          | bool     | Yes      | false     | disable / enable the component.
 `defaultIndex`      | number   | Yes      | -1        | Init selected index. `-1`: None is selected. **This only change the highlight of the dropdown row, you have to give a `defaultValue` to change the init text.**
 `defaultValue`      | string   | Yes      | Please select... | Init text of the button. **Invalid in wrapper mode.**
@@ -84,7 +90,7 @@ Prop                | Type     | Optional | Default   | Description
 `onDropdownWillShow`| func     | Yes      |           | Trigger when dropdown will show by touching the button. **Return `false` can cancel the event.**
 `onDropdownWillHide`| func     | Yes      |           | Trigger when dropdown will hide by touching the button. **Return `false` can cancel the event.**
 `onSelect`          | func     | Yes      |           | Trigger when option row touched with selected `index` and `value`. **Return `false` can cancel the event.**
-`accessible`          | bool     | Yes      | true    | Set accessibility of dropdown modal and dropdown rows
+`accessible`        | bool     | Yes      | true    | Set accessibility of dropdown modal and dropdown rows
 `keyboardShouldPersistTaps`    | enum('always', 'never', 'handled') | Yes | 'never' | See react-native `ScrollView` props
 
 ### Methods
