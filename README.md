@@ -1,6 +1,6 @@
 [![npm version](https://badge.fury.io/js/react-native-modal-dropdown.svg)](https://badge.fury.io/js/react-native-modal-dropdown)
 
-# forl of react-native-modal-dropdown
+# fork of react-native-modal-dropdown
 I have forked this component with the purpose of adding new features which were absent in the default component repo: 1 working method  select(-1), 2 - added multiple select
 
 [Original link - react-native-modal-dropdown](https://github.com/sohobloo/react-native-modal-dropdown)
