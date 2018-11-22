@@ -415,11 +415,11 @@ export default class ModalDropdown extends Component {
         buttonText: value,
         selectedIndex: rowID
       });
-    }
-    if (!this.props.multiple && !onDropdownWillHide || onDropdownWillHide() !== false) {
-      this.setState({
-        showDropdown: false
-      });
+      if (!onDropdownWillHide || onDropdownWillHide() !== false) {
+        this.setState({
+          showDropdown: false
+        });
+      }
     }
   }
 
