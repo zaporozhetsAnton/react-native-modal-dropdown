@@ -72,6 +72,7 @@ Prop                | Type     | Optional | Default   | Description
 ------------------- | -------- | -------- | --------- | -----------
 `multiple`          | bool     | Yes      | false     | enable multiselect
 `onMultipleSelect`  | func     | Yes      |           | callback of multiselect
+`multipleAutoClose` | bool     | Yes      | true      | closing dropdown in multiselect
 `disabled`          | bool     | Yes      | false     | disable / enable the component.
 `defaultIndex`      | number   | Yes      | -1        | Init selected index. `-1`: None is selected. **This only change the highlight of the dropdown row, you have to give a `defaultValue` to change the init text.**
 `defaultValue`      | string   | Yes      | Please select... | Init text of the button. **Invalid in wrapper mode.**
