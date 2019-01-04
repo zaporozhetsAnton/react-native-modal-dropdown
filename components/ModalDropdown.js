@@ -187,16 +187,16 @@ export default class ModalDropdown extends Component {
 
     return (
       <TouchableOpacity ref={button => this._button = button}
-                        disabled={disabled}
-                        accessible={accessible}
-                        onPress={this._onButtonPress}
+        disabled={disabled}
+        accessible={accessible}
+        onPress={this._onButtonPress}
       >
         {
           children ||
           (
             <View style={styles.button}>
               <Text style={[styles.buttonText, textStyle]}
-                    numberOfLines={1}
+                numberOfLines={1}
               >
                 {buttonText}
               </Text>
@@ -223,14 +223,14 @@ export default class ModalDropdown extends Component {
       const animationType = animated ? 'fade' : 'none';
       return (
         <Modal animationType={animationType}
-               visible={true}
-               transparent={true}
-               onRequestClose={this._onRequestClose}
-               supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}
+          visible={true}
+          transparent={true}
+          onRequestClose={this._onRequestClose}
+          supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}
         >
           <TouchableWithoutFeedback accessible={accessible}
-                                    disabled={!showDropdown}
-                                    onPress={this._onModalPress}
+            disabled={!showDropdown}
+            onPress={this._onModalPress}
           >
             <View style={styles.modal}>
               <View style={[styles.dropdown, dropdownStyle, frameStyle]}>
@@ -303,13 +303,13 @@ export default class ModalDropdown extends Component {
     const {scrollEnabled, renderSeparator, showsVerticalScrollIndicator, keyboardShouldPersistTaps} = this.props;
     return (
       <ListView scrollEnabled={scrollEnabled}
-                style={styles.list}
-                dataSource={this._dataSource}
-                renderRow={this._renderRow}
-                renderSeparator={renderSeparator || this._renderSeparator}
-                automaticallyAdjustContentInsets={false}
-                showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-                keyboardShouldPersistTaps={keyboardShouldPersistTaps}
+        style={styles.list}
+        dataSource={this._dataSource}
+        renderRow={this._renderRow}
+        renderSeparator={renderSeparator || this._renderSeparator}
+        automaticallyAdjustContentInsets={false}
+        showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+        keyboardShouldPersistTaps={keyboardShouldPersistTaps}
       />
     );
   }
@@ -388,6 +388,15 @@ export default class ModalDropdown extends Component {
     );
   };
 
+  createMultipleButtonText (options) {
+    const { multiple, multipleButtonCreator } = this.props
+    if (multiple && multipleButtonCreator && options.length > 0) {
+      return multipleButtonCreator(options)
+    } else {
+      return options.length ? `${options.length} option${options.length > 1 ? 's' : ''} selected` : 'Choose..'
+    }
+  }
+
   _onRowPress(rowData, sectionID, rowID, highlightRow) {
     const {onSelect, renderButtonText, onMultipleSelect, multipleAutoClose} = this.props;
     highlightRow(sectionID, rowID);
@@ -408,7 +417,7 @@ export default class ModalDropdown extends Component {
       this.setState({
         valuesArray: newValuesArray,
         indexesArray: newIndexesArray,
-        buttonText: newValuesArray.length ? `${newValuesArray.length} option${newValuesArray.length > 1 ? 's' : ''} selected` : 'Choose..'
+        buttonText: this.createMultipleButtonText(newValuesArray)
       }, () => {
         onMultipleSelect(newValuesArray)
       });
