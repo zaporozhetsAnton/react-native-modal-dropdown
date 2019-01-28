@@ -13,13 +13,13 @@ import {
   Dimensions,
   View,
   Text,
-  ListView,
   TouchableWithoutFeedback,
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableHighlight,
   Modal,
   ActivityIndicator,
+  FlatList
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -96,6 +96,8 @@ export default class ModalDropdown extends Component {
     this.select = this.select.bind(this)
     this.show = this.show.bind(this)
     this.hide = this.hide.bind(this)
+
+    this.optionsList = React.createRef()
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -212,6 +214,11 @@ export default class ModalDropdown extends Component {
     if (!onDropdownWillShow ||
       onDropdownWillShow() !== false) {
       this.show();
+      if (this.state.selectedIndex && this.props.autoScroll) {
+        setTimeout(() => {
+          this.optionsList.current.scrollToIndex({index: this.state.selectedIndex, viewPosition: 1})
+        }, 250)
+      }
     }
   };
 
@@ -300,33 +307,30 @@ export default class ModalDropdown extends Component {
   }
 
   _renderDropdown() {
-    const {scrollEnabled, renderSeparator, showsVerticalScrollIndicator, keyboardShouldPersistTaps} = this.props;
+    const {scrollEnabled, renderSeparator, showsVerticalScrollIndicator, keyboardShouldPersistTaps, options} = this.props;
     return (
-      <ListView scrollEnabled={scrollEnabled}
+      <FlatList
+        ref={this.optionsList}
+        scrollEnabled={scrollEnabled}
         style={styles.list}
-        dataSource={this._dataSource}
-        renderRow={this._renderRow}
-        renderSeparator={renderSeparator || this._renderSeparator}
-        automaticallyAdjustContentInsets={false}
+        data={options}
+        renderItem={this._renderRow}
+        ItemSeparatorComponent={renderSeparator || this._renderSeparator}
         showsVerticalScrollIndicator={showsVerticalScrollIndicator}
         keyboardShouldPersistTaps={keyboardShouldPersistTaps}
+        getItemLayout={(data, index) => {
+          return {length: options.length, index, offset: options.length * index}
+        }}
+        keyExtractor={(item, index) => index.toString()}
       />
-    );
+    )
   }
 
-  get _dataSource() {
-    const {options} = this.props;
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-    return ds.cloneWithRows(options);
-  }
-
-  _renderRow = (rowData, sectionID, rowID, highlightRow) => {
+  _renderRow = ({ item, index }) => {
     const {renderRow, dropdownTextStyle, dropdownTextHighlightStyle, accessible} = this.props;
     const {selectedIndex} = this.state;
-    const key = `row_${rowID}`;
-    const highlighted = this.props.multiple ? this.state.indexesArray.includes(rowID) : rowID == selectedIndex;
+    const key = `row_${index}`;
+    const highlighted = this.props.multiple ? this.state.indexesArray.includes(index) : index == selectedIndex;
     const row = !renderRow ?
       (<Text style={[
         styles.rowText,
@@ -335,13 +339,13 @@ export default class ModalDropdown extends Component {
         highlighted && dropdownTextHighlightStyle
       ]}
       >
-        {rowData}
+        {item}
       </Text>) :
-      renderRow(rowData, rowID, highlighted);
+      renderRow(item, index, highlighted);
     const preservedProps = {
       key,
       accessible,
-      onPress: () => this._onRowPress(rowData, sectionID, rowID, highlightRow),
+      onPress: () => this._onRowPress(item, index),
     };
     if (TOUCHABLE_ELEMENTS.find(name => name == row.type.displayName)) {
       const props = {...row.props};
@@ -397,9 +401,9 @@ export default class ModalDropdown extends Component {
     }
   }
 
-  _onRowPress(rowData, sectionID, rowID, highlightRow) {
+  _onRowPress(rowData, rowID) {
     const {onSelect, renderButtonText, onMultipleSelect, multipleAutoClose} = this.props;
-    highlightRow(sectionID, rowID);
+    // highlightRow(sectionID, rowID);
     const value = renderButtonText && renderButtonText(rowData) || rowData.toString();
     if (this.props.multiple && onMultipleSelect) {
       let newValuesArray = [...this.state.valuesArray]
