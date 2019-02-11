@@ -100,6 +100,27 @@ export default class ModalDropdown extends Component {
     this.optionsList = React.createRef()
   }
 
+  componentDidMount () {
+    let { multiple, options, defaultMultipleArray } = this.props
+    if (multiple && options && Array.isArray(options) && defaultMultipleArray && Array.isArray(defaultMultipleArray)) {
+      let newValuesArray = []
+      let newIndexesArray = []
+      defaultMultipleArray.forEach( defOption => {
+        if (options.includes(defOption)) {
+          newValuesArray.push(defOption)
+          newIndexesArray.push(options.indexOf(defOption))
+        }
+      })
+      if (newValuesArray.length > 0) {
+        this.setState({
+          valuesArray: newValuesArray,
+          indexesArray: newIndexesArray,
+          buttonText: this.createMultipleButtonText(newValuesArray)
+        })
+      }
+    }
+  }
+
   // componentWillReceiveProps(nextProps) {
   //   let {buttonText, selectedIndex} = this.state;
   //   const {defaultIndex, defaultValue, options} = nextProps;
