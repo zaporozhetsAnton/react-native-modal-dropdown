@@ -237,7 +237,9 @@ export default class ModalDropdown extends Component {
       this.show();
       if (this.state.selectedIndex && this.props.autoScroll) {
         setTimeout(() => {
-          this.optionsList.current.scrollToIndex({index: this.state.selectedIndex, viewPosition: 1})
+          if (this.state.showDropdown) {
+            this.optionsList.current.scrollToIndex({index: this.state.selectedIndex, viewPosition: 1})
+          }
         }, 250)
       }
     }
