@@ -235,13 +235,6 @@ export default class ModalDropdown extends Component {
     if (!onDropdownWillShow ||
       onDropdownWillShow() !== false) {
       this.show();
-      if (this.state.selectedIndex && this.props.autoScroll) {
-        setTimeout(() => {
-          if (this.state.showDropdown) {
-            this.optionsList.current.scrollToIndex({index: this.state.selectedIndex, viewPosition: 1})
-          }
-        }, 250)
-      }
     }
   };
 
@@ -342,8 +335,9 @@ export default class ModalDropdown extends Component {
         showsVerticalScrollIndicator={showsVerticalScrollIndicator}
         keyboardShouldPersistTaps={keyboardShouldPersistTaps}
         getItemLayout={(data, index) => {
-          return {length: options.length, index, offset: options.length * index}
+          return {length: 38.5, index, offset: 38.5 * index}
         }}
+        initialScrollIndex={(this.state.selectedIndex && this.props.autoScroll) ? this.state.selectedIndex : null}
         keyExtractor={(item, index) => index.toString()}
       />
     )
