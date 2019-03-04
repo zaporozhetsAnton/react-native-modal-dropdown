@@ -323,23 +323,30 @@ export default class ModalDropdown extends Component {
   }
 
   _renderDropdown() {
-    const {scrollEnabled, renderSeparator, showsVerticalScrollIndicator, keyboardShouldPersistTaps, options} = this.props;
+    const {scrollEnabled, renderSeparator, showsVerticalScrollIndicator, keyboardShouldPersistTaps, options, noOptionsTextStyle} = this.props;
     return (
-      <FlatList
-        ref={this.optionsList}
-        scrollEnabled={scrollEnabled}
-        style={styles.list}
-        data={options}
-        renderItem={this._renderRow}
-        ItemSeparatorComponent={renderSeparator || this._renderSeparator}
-        showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-        keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-        getItemLayout={(data, index) => {
-          return {length: 38.5, index, offset: 38.5 * index}
-        }}
-        initialScrollIndex={(this.state.selectedIndex && this.props.autoScroll) ? this.state.selectedIndex : null}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      <>
+        {options.length > 0
+          ? <FlatList
+            ref={this.optionsList}
+            scrollEnabled={scrollEnabled}
+            style={styles.list}
+            data={options}
+            renderItem={this._renderRow}
+            ItemSeparatorComponent={renderSeparator || this._renderSeparator}
+            showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+            keyboardShouldPersistTaps={keyboardShouldPersistTaps}
+            getItemLayout={(data, index) => {
+              return {length: 38.5, index, offset: 38.5 * index}
+            }}
+            initialScrollIndex={(this.state.selectedIndex && this.props.autoScroll) ? this.state.selectedIndex : null}
+            keyExtractor={(item, index) => index.toString()}
+          />
+          : <TouchableOpacity style={{ flex: 1 }}
+          onPress={this._onModalPress}>
+            <Text style={noOptionsTextStyle}>No options</Text>
+          </TouchableOpacity>}
+      </>
     )
   }
 
