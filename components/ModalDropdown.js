@@ -198,7 +198,7 @@ export default class ModalDropdown extends Component {
       this.setState({
         valuesArray: [],
         indexesArray: [],
-        buttonText: 'Choose..'
+        buttonText: this.props.defaultValue
       })
       onMultipleSelect([])
     }
