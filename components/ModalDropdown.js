@@ -417,11 +417,11 @@ export default class ModalDropdown extends Component {
   };
 
   createMultipleButtonText (options) {
-    const { multiple, multipleButtonCreator } = this.props
+    const { multiple, multipleButtonCreator, placeholder } = this.props
     if (multiple && multipleButtonCreator && options.length > 0) {
       return multipleButtonCreator(options)
     } else {
-      return options.length ? `${options.length} option${options.length > 1 ? 's' : ''} selected` : 'Choose..'
+      return options.length ? `${options.length} option${options.length > 1 ? 's' : ''} selected` : placeholder
     }
   }
 
