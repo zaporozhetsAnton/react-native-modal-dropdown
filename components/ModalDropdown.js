@@ -351,7 +351,7 @@ export default class ModalDropdown extends Component {
   }
 
   _renderRow = ({ item, index }) => {
-    const {renderRow, dropdownTextStyle, dropdownTextHighlightStyle, accessible} = this.props;
+    const {renderRow, dropdownTextStyle, dropdownTextHighlightStyle, accessible, underlayColor} = this.props;
     const {selectedIndex} = this.state;
     const key = `row_${index}`;
     const highlighted = this.props.multiple ? this.state.indexesArray.includes(index) : index == selectedIndex;
@@ -370,11 +370,13 @@ export default class ModalDropdown extends Component {
       key,
       accessible,
       onPress: () => this._onRowPress(item, index),
+      underlayColor
     };
     if (TOUCHABLE_ELEMENTS.find(name => name == row.type.displayName)) {
       const props = {...row.props};
       props.key = preservedProps.key;
       props.onPress = preservedProps.onPress;
+      props.underlayColor = preservedProps.underlayColor
       const {children} = row.props;
       switch (row.type.displayName) {
         case 'TouchableHighlight': {
